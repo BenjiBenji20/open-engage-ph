@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-from ..enums.role import ModelRole
+from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
 class Regulator(BaseUser):

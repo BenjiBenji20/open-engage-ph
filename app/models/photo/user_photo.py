@@ -1,7 +1,7 @@
 # models/photo.py
 from datetime import datetime, timezone
 import uuid
-from sqlalchemy import Boolean, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import VARCHAR, Boolean, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -22,6 +22,9 @@ class UserPhoto(Base):
   # Metadata
   uploaded_at = Column(DateTime(timezone=True), server_default=func.now())
   is_profile_photo = Column(Boolean, default=False)
+  
+  title = Column(VARCHAR(50), nullable=True)
+  description = Column(VARCHAR(255), nullable=True)
   
   # Polymorphic foreign keys
   end_user_id = Column(String(36), ForeignKey("end_user.id"), nullable=True)

@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, DateTime, Boolean, Integer, Enum
 from datetime import datetime, timezone
 import uuid
 
-from app.models.enums.role import ModelRole
+from app.models.enums.user_role import ModelRole
 from app.db.base import Base
 
 class BaseUser(Base):

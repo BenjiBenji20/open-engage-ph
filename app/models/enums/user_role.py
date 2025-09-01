@@ -5,6 +5,5 @@ class ModelRole(str, Enum):
   ADMIN = "admin"
   MODERATOR = "moderator"
   REGULATOR = "regulator"
-  
-  COMMENT = "comment"
+
   
