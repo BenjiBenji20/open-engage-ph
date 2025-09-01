@@ -25,4 +25,10 @@ class Regulator(BaseUser):
     cascade="all, delete-orphan",
     doc="One oauth acc only per user"
   )
-  
+  updated_oridinance = relationship(
+    "Ordinance",
+    back_populates="regulator",
+    uselist=True, 
+    cascade="all, delete-orphan",
+    doc="many ordinance can be updated by one regulator user"
+  )

@@ -1,6 +1,8 @@
 from datetime import datetime, timezone
 import uuid
-from sqlalchemy import VARCHAR, Column, DateTime, Enum, String
+from sqlalchemy import VARCHAR, Column, DateTime, Enum, ForeignKey, String
+from sqlalchemy.orm import relationship
+
 from app.db.base import Base
 from app.models.enums.ordinance_category import OrdinanceCategory
 
@@ -20,3 +22,8 @@ class Ordinance(Base):
   
   category = Column(Enum(OrdinanceCategory), nullable=False)
   
+  # polymorphic foreign key
+  regulator_id = Column(String(36), ForeignKey("regulator.id"), nullable=True)
+  
+  # relationship
+  regulator = relationship("Regulator", back_populates="updated_ordinance")
