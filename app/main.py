@@ -11,6 +11,7 @@ from app.models.moderator.moderator import Moderator
 from app.models.regulator.regulator import Regulator
 from app.models.oauth.oauth import UserOAuth
 from app.models.photo.user_photo import UserPhoto
+from app.models.ordinance.ordinance import Ordinance
 
 
 @asynccontextmanager
