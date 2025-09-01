@@ -18,5 +18,11 @@ class Moderator(BaseUser):
   
   # relationships
   photos = relationship("UserPhoto", back_populates="moderator")
-  oauth_accounts = relationship("UserOAuth", back_populates="moderator")
+  oauth_account = relationship(
+    "UserOAuth", 
+    back_populates="moderator",
+    uselist=False,
+    cascade="all, delete-orphan",
+    doc="One oauth acc only per user"
+  )
   

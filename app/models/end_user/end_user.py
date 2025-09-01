@@ -21,5 +21,11 @@ class EndUser(BaseUser):
   
   # relationships
   photos = relationship("UserPhoto", back_populates="end_user")
-  oauth_accounts = relationship("UserOAuth", back_populates="end_user")
+  oauth_account = relationship(
+    "UserOAuth", 
+    back_populates="end_user",
+    uselist=False,
+    cascade="all, delete-orphan",
+    doc="One oauth acc only per user"
+  )
   

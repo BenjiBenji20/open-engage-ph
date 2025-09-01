@@ -18,5 +18,11 @@ class Regulator(BaseUser):
   
   # relationships
   photos = relationship("UserPhoto", back_populates="regulator")
-  oauth_accounts = relationship("UserOAuth", back_populates="regulator")
+  oauth_account = relationship(
+    "UserOAuth", 
+    back_populates="regulator",
+    uselist=False,
+    cascade="all, delete-orphan",
+    doc="One oauth acc only per user"
+  )
   

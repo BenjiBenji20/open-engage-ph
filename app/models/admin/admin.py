@@ -15,5 +15,11 @@ class Admin(BaseUser):
   
   # relationships
   photos = relationship("UserPhoto", back_populates="admin")
-  oauth_accounts = relationship("UserOAuth", back_populates="admin")
+  oauth_account = relationship(
+    "UserOAuth", 
+    back_populates="admin",
+    uselist=False,
+    cascade="all, delete-orphan",
+    doc="One oauth acc only per user"
+  )
   
