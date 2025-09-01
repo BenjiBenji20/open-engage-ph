@@ -1,0 +1,20 @@
+# tools
+dotenv
+
+# web framework tools
+fastapi
+uvicorn
+
+# type hinting and validations
+pydantic_settings
+email-validator
+
+# database
+sqlalchemy
+asyncpg
+alembic
+
+# security
+psycopg2-binary
+python-jose[cryptography]
+passlib[bcrypt]
