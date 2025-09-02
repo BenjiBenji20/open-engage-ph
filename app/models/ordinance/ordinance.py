@@ -1,10 +1,12 @@
 from datetime import datetime, timezone
+from typing import List
 import uuid
 from sqlalchemy import VARCHAR, Column, DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
-from app.models.enums.ordinance_category import OrdinanceCategory
+from app.models.enums.ordinance_category import OrdinanceCategory, OrdinanceVote
+from app.models.enums.reactions import Reactions
 
 class Ordinance(Base):
   __tablename__="ordinance"
@@ -21,9 +23,15 @@ class Ordinance(Base):
   ai_explanation = Column(VARCHAR(255), nullable=True)
   
   category = Column(Enum(OrdinanceCategory), nullable=False)
+  reaction: List = Column(Enum(Reactions), nullable=True)
+  vote: List = Column(Enum(OrdinanceVote), nullable=True)
   
   # polymorphic foreign key
-  regulator_id = Column(String(36), ForeignKey("regulator.id"), nullable=True)
+  regulator_id = Column(
+    String(36), 
+    ForeignKey("regulator.id", ondelete="SET NULL"), 
+    nullable=True
+  )
   
   # relationship
   regulator = relationship("Regulator", back_populates="updated_ordinance")
