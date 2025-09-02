@@ -15,6 +15,9 @@ class Settings(BaseSettings):
   POSTGRES_HOST: str
   POSTGRES_PORT: str
   POSTGRES_DATABASE: str
+  # mongodb
+  MONGO_DB_URI: str
+  MONGO_DB_NAME: str
   
   class Config:
     env_file = ".env"
