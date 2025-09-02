@@ -19,10 +19,6 @@ class BaseUser:
   complete_address = Column(String(50), nullable=False)
   age = Column(Integer, default=18, nullable=False)
   
-  # photo handling
-  profile_photo_url = Column(String, nullable=True)
-  profile_photo_filename = Column(String, nullable=True)
-  
   # account guard
   failed_attempts = Column(Integer, default=0, nullable=False)
   banned_until = Column(DateTime(timezone=True), nullable=True)

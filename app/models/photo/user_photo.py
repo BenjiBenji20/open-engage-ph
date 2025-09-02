@@ -15,9 +15,9 @@ class UserPhoto(Base):
 
   # Photo storage info
   filename = Column(String, nullable=False)
-  file_url = Column(String, nullable=False)  # CDN or storage URL
-  file_size = Column(Integer)  # Size in bytes
-  mime_type = Column(String)  # image/jpeg, image/png
+  file_url = Column(String, nullable=True)  # CDN or storage URL
+  file_size = Column(Integer, nullable=True)  # Size in bytes
+  mime_type = Column(String, nullable=True)  # image/jpeg, image/png
   
   # Metadata
   uploaded_at = Column(DateTime(timezone=True), server_default=func.now())

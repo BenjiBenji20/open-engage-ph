@@ -19,6 +19,15 @@ class Settings(BaseSettings):
   MONGO_DB_URI: str
   MONGO_DB_NAME: str
   
+  #auth security
+  MAX_FAILED_ATTEMPTS: int 
+  BAN_DURATION_MINUTES: int
+  
+  # JWT settings
+  JWT_SECRET_KEY: str
+  JWT_ALGORITHM: str
+  ACCESS_TOKEN_EXPIRE_MINUTES: int
+  
   class Config:
     env_file = ".env"
     extra = "ignore"

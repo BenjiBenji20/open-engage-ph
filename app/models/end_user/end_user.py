@@ -14,9 +14,6 @@ class EndUser(BaseUser, Base):
     'polymorphic_on': BaseUser.role
   }
   
-  post_photos = Column(String, nullable=True)
-  post_photos_filename = Column(String, nullable=True)
-  
   # anonimity
   is_anonymous = Column(Boolean, default=False, nullable=False)
   

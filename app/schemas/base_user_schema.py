@@ -1,5 +1,4 @@
-from datetime import datetime, timezone
-import uuid
+from datetime import datetime
 from pydantic import BaseModel, Field, field_validator, EmailStr
 
 import regex
@@ -33,9 +32,6 @@ class BaseUserRequestSchema(BaseModel):
   complete_name: str = Field(..., max_length=50)
   complete_address: str = Field(default="Malabon City", max_length=100)
   age: int = Field(default=18, gt=0, le=120)
-  
-  profile_photo_url: str | None = Field(None, max_length=255)
-  profile_photo_filename: str | None = Field(None, max_length=255)
 
   @field_validator("complete_name")
   @classmethod

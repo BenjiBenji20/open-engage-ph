@@ -14,9 +14,6 @@ class Regulator(BaseUser, Base):
     'polymorphic_on': BaseUser.role
   }
   
-  post_photos = Column(String, nullable=True)
-  post_photos_filename = Column(String, nullable=True)
-  
   # relationships
   photos = relationship("UserPhoto", back_populates="regulator")
   oauth_account = relationship(

@@ -14,9 +14,6 @@ class Moderator(BaseUser, Base):
     'polymorphic_on': BaseUser.role
   }
   
-  post_photos = Column(String, nullable=True)
-  post_photos_filename = Column(String, nullable=True)
-  
   # relationships
   photos = relationship("UserPhoto", back_populates="moderator")
   oauth_account = relationship(

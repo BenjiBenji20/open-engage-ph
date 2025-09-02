@@ -28,6 +28,7 @@ from app.routes.auth.end_user_router import end_user_router
 async def life_span(app: FastAPI):
   try:
     async with engine.begin() as conn:
+      # await conn.run_sync(Base.metadata.drop_all)
       await conn.run_sync(Base.metadata.create_all)
       print("RDBMS table are created successfully!")
       
