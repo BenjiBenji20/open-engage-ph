@@ -3,15 +3,13 @@ from datetime import datetime, timezone
 import uuid
 
 from app.models.enums.user_role import ModelRole
-from app.db.base import Base
 
-class BaseUser(Base):
-  __abstract__ = True  # This makes it an abstract base class
-  
+class BaseUser:
   id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
   created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
   
   # account details
+  email = Column(String(100), nullable=False, unique=True, index=True)
   username = Column(String(50), nullable=False, unique=True)
   password_hash = Column(String(100), nullable=True)
   role = Column(Enum(ModelRole), nullable=False)

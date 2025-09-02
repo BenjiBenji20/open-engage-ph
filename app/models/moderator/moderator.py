@@ -3,8 +3,9 @@ from sqlalchemy.orm import relationship
 
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
+from app.db.base import Base
 
-class Moderator(BaseUser):
+class Moderator(BaseUser, Base):
   __tablename__ = "moderator"
   
   # This ensures proper inheritance mapping

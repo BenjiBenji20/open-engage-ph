@@ -1,5 +1,6 @@
 # tools
 dotenv
+regex
 
 # web framework tools
 fastapi

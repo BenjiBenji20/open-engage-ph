@@ -6,6 +6,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.db.db_session import engine
 from app.configs.settings import settings
 from app.db.base import Base
+from app.exceptions.customed_exceptions import *
+from app.exceptions.error_handler import *
 import app.state.mongodb_client_state as state
 
 # Models
@@ -17,6 +19,9 @@ from app.models.regulator.regulator import Regulator
 from app.models.oauth.oauth import UserOAuth
 from app.models.photo.user_photo import UserPhoto
 from app.models.ordinance.ordinance import Ordinance
+
+# routers
+from app.routes.auth.end_user_router import end_user_router
 
 
 @asynccontextmanager
@@ -45,4 +50,21 @@ async def life_span(app: FastAPI):
     print("Application shutdown...")
     
     
-app = FastAPI(lifespan=life_span)
+app = FastAPI(
+  title=settings.APP_NAME,
+  lifespan=life_span
+)
+
+# routes registry
+app.include_router(end_user_router)
+
+
+# regiustering global exeception handler
+app.add_exception_handler(InternalServerError, internal_server_error_handler)
+app.add_exception_handler(UnprocessibleContentException, unprocessible_content_handler)
+app.add_exception_handler(ResourceNotFoundException, resource_not_found_handler)
+app.add_exception_handler(DuplicateEntryException, duplicate_entry_exception_handler)
+app.add_exception_handler(UnauthorizedAccessException, unauthorized_access_handler)
+app.add_exception_handler(ForbiddenAccessException, forbidden_access_handler)
+app.add_exception_handler(InvalidTokenException, invalid_token_handler)
+app.add_exception_handler(InvalidRequestException, invalid_request_handler)

@@ -1,0 +1,5 @@
+from app.schemas.base_user_schema import BaseUserResponseSchema, BaseUserRequestSchema
+
+
+EUResRegistrationSchema = BaseUserResponseSchema
+EUReqRegistrationSchema = BaseUserRequestSchema

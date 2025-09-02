@@ -1,10 +1,11 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+from app.db.base import Base
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
-class Regulator(BaseUser):
+class Regulator(BaseUser, Base):
   __tablename__ = "regulator"
   
   # This ensures proper inheritance mapping

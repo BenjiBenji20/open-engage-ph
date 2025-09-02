@@ -1,10 +1,11 @@
 from sqlalchemy import Column, String, Boolean
 from sqlalchemy.orm import relationship
 
+from app.db.base import Base
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
-class EndUser(BaseUser):
+class EndUser(BaseUser, Base):
   __tablename__ = "end_user"
   
   # This ensures proper inheritance mapping
