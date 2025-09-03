@@ -3,8 +3,11 @@ from datetime import datetime, timezone
 import uuid
 
 from app.models.enums.user_role import ModelRole
+from app.db.base import Base
 
-class BaseUser:
+class BaseUser(Base):
+  __tablename__ = "base_users"
+  
   id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
   created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
   
@@ -24,4 +27,8 @@ class BaseUser:
   banned_until = Column(DateTime(timezone=True), nullable=True)
   last_login = Column(DateTime(timezone=True), nullable=True)
   is_active = Column(Boolean, default=False, nullable=False)
+  
+  __mapper_args__ = {
+    "polymorphic_on": role
+  }
   

@@ -1,17 +1,17 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from app.db.base import Base
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
-class Regulator(BaseUser, Base):
+class Regulator(BaseUser):
   __tablename__ = "regulator"
+  
+  id = Column(String(36), ForeignKey("base_users.id"), primary_key=True)
   
   # This ensures proper inheritance mapping
   __mapper_args__ = {
-    'polymorphic_identity': ModelRole.REGULATOR,
-    'polymorphic_on': BaseUser.role
+    'polymorphic_identity': ModelRole.REGULATOR
   }
   
   # relationships

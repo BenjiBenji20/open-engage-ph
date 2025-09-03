@@ -1,16 +1,17 @@
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from app.db.base import Base
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
-class Admin(BaseUser, Base):
+class Admin(BaseUser):
   __tablename__ = "admin"
+  
+  id = Column(String(36), ForeignKey("base_users.id"), primary_key=True)
   
   # This ensures proper inheritance mapping
   __mapper_args__ = {
-    'polymorphic_identity': ModelRole.ADMIN,
-    'polymorphic_on': BaseUser.role
+    'polymorphic_identity': ModelRole.ADMIN
   }
   
   # relationships

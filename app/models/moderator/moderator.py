@@ -1,17 +1,18 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 from app.db.base import Base
 
-class Moderator(BaseUser, Base):
+class Moderator(BaseUser):
   __tablename__ = "moderator"
+  
+  id = Column(String(36), ForeignKey("base_users.id"), primary_key=True)
   
   # This ensures proper inheritance mapping
   __mapper_args__ = {
-    'polymorphic_identity': ModelRole.MODERATOR,
-    'polymorphic_on': BaseUser.role
+    'polymorphic_identity': ModelRole.MODERATOR
   }
   
   # relationships

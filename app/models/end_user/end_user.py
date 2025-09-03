@@ -1,17 +1,17 @@
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, ForeignKey, String, Boolean
 from sqlalchemy.orm import relationship
 
-from app.db.base import Base
 from ..enums.user_role import ModelRole
 from app.models.base_user import BaseUser
 
-class EndUser(BaseUser, Base):
+class EndUser(BaseUser):
   __tablename__ = "end_user"
+  
+  id = Column(String(36), ForeignKey("base_users.id"), primary_key=True)
   
   # This ensures proper inheritance mapping
   __mapper_args__ = {
-    'polymorphic_identity': ModelRole.END_USER,
-    'polymorphic_on': BaseUser.role
+    'polymorphic_identity': ModelRole.END_USER
   }
   
   # anonimity
