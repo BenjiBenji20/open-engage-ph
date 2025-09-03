@@ -21,7 +21,9 @@ from app.models.photo.user_photo import UserPhoto
 from app.models.ordinance.ordinance import Ordinance
 
 # routers
-from app.routes.auth.end_user_router import end_user_router
+from app.routes.auth.auth_router import auth_router
+from app.routes.end_user.end_user_router import end_user_router
+from app.routes.admin.admin_router import admin_router
 
 
 @asynccontextmanager
@@ -58,6 +60,8 @@ app = FastAPI(
 
 # routes registry
 app.include_router(end_user_router)
+app.include_router(auth_router)
+app.include_router(admin_router)
 
 
 # regiustering global exeception handler

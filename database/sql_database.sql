@@ -9,3 +9,6 @@ SELECT EXISTS (
     WHERE table_schema = 'public'  -- ← Change to public
     AND table_name = 'admin'
 );
+
+SELECT * FROM end_user;
+SELECT * FROM base_users;
