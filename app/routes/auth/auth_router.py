@@ -1,50 +1,29 @@
 from fastapi import APIRouter, Depends, Request, Response
-
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
-import logging
 
 from app.db.db_session import get_async_db
-from app.models.end_user.end_user import EndUser
-from app.schemas.end_user.end_user_schema import EUReqRegistrationSchema, EUResRegistrationSchema
-from app.services.auth.token_service import *
-from app.schemas.token_schema import TokenResponseSchema, RefreshTokenResponseSchema
 from app.exceptions.customed_exceptions import (
-  InternalServerError, InvalidTokenException, ResourceNotFoundException, 
-  UnprocessibleContentException, InvalidRequestException,
-  UnauthorizedAccessException
+  InternalServerError, InvalidTokenException, 
 )
-from app.services.auth.end_user_service import end_user_registration_service, end_user_auth_token_service
+from app.schemas.token_schema import RefreshTokenResponseSchema, TokenResponseSchema
+from app.models.base_user import BaseUser
+from app.services.auth.auth_service import *
 
-end_user_router = APIRouter(
-  prefix="/api/enduser",
-  tags=["end user API endpoints"]
+auth_router = APIRouter(
+  prefix="/api/user",
+  tags=["General user authentication router"]
 )
-
-
-logger = logging.getLogger(__name__)
-
-@end_user_router.post("/registration", response_model=EUResRegistrationSchema)
-async def end_user_registration_router(user: EUReqRegistrationSchema, db: AsyncSession = Depends(get_async_db)):
-  try:
-    new_user: EUResRegistrationSchema = await end_user_registration_service(user, db)
-    
-    if not new_user:
-      raise UnprocessibleContentException("Value error")
-    
-    return new_user
-  except Exception as e:
-    raise InvalidRequestException("Invalid user registration")
   
-
-@end_user_router.post("/authenticate/token", response_model=TokenResponseSchema)
+  
+@auth_router.post("/authenticate/token", response_model=TokenResponseSchema)
 async def end_user_auth_token_router(
   response: Response,
   user_cred_data: OAuth2PasswordRequestForm = Depends(),
   db: AsyncSession = Depends(get_async_db)
 ):
   try:
-    user: EndUser = await end_user_auth_token_service(
+    user: BaseUser = await auth_token_service(
       user_cred_data.username,
       user_cred_data.password, 
       db
@@ -79,14 +58,14 @@ async def end_user_auth_token_router(
       "token_type": "bearer"
     }
   except (UnauthorizedAccessException, ResourceNotFoundException) as e:
-    logger.error("Authentication failed:", str(e))
+    logger.error("Authentication failed: %s", str(e))
     raise UnauthorizedAccessException("Invalid email or password")
   except Exception as e:
-    logger.error("Unexpected error during authentication:", str(e))
+    logger.error("Unexpected error during authentication: %s", str(e))
     raise InternalServerError("An error occurred during authentication")
   
 
-@end_user_router.post("/authenticate/refresh-token", response_model=RefreshTokenResponseSchema)
+@auth_router.post("/authenticate/refresh-token", response_model=RefreshTokenResponseSchema)
 async def refresh_a_token_route(request: Request):
   """Get the refresh token from request body or cookies"""
   try:
